@@ -87,7 +87,7 @@ export default function CartDetails() {
               </tbody>
             </table>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-md border mt-6 md:mt-0">
+          <div className="bg-white p-6 h-fit rounded-lg shadow-md border mt-6 md:mt-0">
             <ul className="space-y-4">
               <li className="flex justify-between items-center text-lg font-medium">
                 <span>
@@ -101,7 +101,7 @@ export default function CartDetails() {
               <li>
                 <button
                   onClick={() => router.push('/shipping')}
-                  className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 disabled:bg-gray-400"
+                  className="w-full bg-blue-600 text-white font-semibold py-3  rounded-lg hover:bg-blue-700 transition-colors duration-200 disabled:bg-gray-400"
                   disabled={items.length === 0}
                 >
                   Proceed to Checkout

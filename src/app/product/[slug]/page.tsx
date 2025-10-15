@@ -3,12 +3,12 @@ import data from '@/lib/data';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function ProductDetails({
+export default async function ProductDetails({
   params,
 }: {
   params: { slug: string };
 }) {
-  const { slug } = params;
+  const { slug } = await params;
   const product = data.products?.find((item) => item.slug === slug);
   if (!product) {
     return (
