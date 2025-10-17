@@ -27,7 +27,7 @@ export default async function ProductDetails({
         ← Back to Products
       </Link>
 
-      <div className="grid md:grid-cols-4 md:gap-8 mt-6">
+      <div className="grid lg:grid-cols-4 md:gap-8 mt-6">
         {/* Image Section */}
         <div className="md:col-span-2 flex items-center justify-center bg-gray-50 rounded-2xl p-4">
           <Image

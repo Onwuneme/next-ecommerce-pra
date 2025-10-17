@@ -1,25 +1,27 @@
 import { Schema, model, models } from 'mongoose';
 
-const productSchema = new Schema({
-  name: { type: String, required: true },
-  slug: { type: String, required: true, unique: true },
-  image: { type: String, required: true },
-  banner: { type: String },
-  price: { type: Number, required: true },
-  brand: { type: String },
-  description: { type: String },
-  category: { type: String },
-  rating: { type: Number, default: 0 },
-  countInStock: { type: Number, default: 0 },
-  colors: [String],
-  size: [String],
-  isFeatured: { type: Boolean, default: false },
-});
+const productSchema = new Schema(
+  {
+    name: { type: String, required: true },
+    slug: { type: String, required: true, unique: true },
+    image: { type: String, required: true },
+    price: { type: Number, required: true },
+    brand: { type: String, required: true },
+    description: { type: String, required: true },
+    category: { type: String, required: true },
+    numReviews: { type: Number, required: true, default: 0 },
+    rating: { type: Number, required: true, default: 0 },
+    countInStock: { type: Number, required: true, default: 0 },
+    isFeatured: { type: Boolean, default: false },
+    colors: [{ type: String }],
+    size: [{ type: String }],
+    banner: String,
+  },
+  { timestamps: true }
+);
 
-// Prevent model overwrite issue in Next.js
 const ProductModel = models.Product || model('Product', productSchema);
-
-
+export default ProductModel;
 export type Product = {
   _id?: string;
   name: string;
@@ -31,9 +33,8 @@ export type Product = {
   description: string;
   category: string;
   rating: number;
+  numReviews: number;
   countInStock: number;
-  colors?: string[];
-  size?: string[];
+  colors?:[];
+  sizes?:[];
 };
-
-export default ProductModel;
