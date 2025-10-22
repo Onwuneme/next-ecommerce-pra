@@ -22,23 +22,21 @@ export const POST = async (request: NextRequest) => {
         status: 201,
       }
     );
-  } catch (err) {
-    if (err instanceof Error) {
-      console.log(
-        Response.json(
+  } catch (error) {
+    if( error instanceof Error ){
+        console.log(Response.json(
           { message: error.message },
           {
             status: 500,
           }
-        )
-      );
+        ))
 
-      return Response.json(
-        { message: error.message },
-        {
-          status: 500,
-        }
-      );
+        return Response.json(
+          { message: error.message },
+          {
+            status: 500,
+          }
+        );
     }
   }
 };
