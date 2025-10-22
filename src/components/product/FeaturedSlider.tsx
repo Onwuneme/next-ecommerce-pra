@@ -33,14 +33,18 @@ export default function FeaturedSlider({ featuredProducts }:{featuredProducts:Pr
           }`}
         >
           <Link href={`/product/${product.slug}`}>
-            <Image
-              src={product.banner}
-              alt={product.name}
-              width={1200}
-              height={500}
-               priority
-              className="object-cover w-full h-[400px] md:h-[400px] rounded-xl"
-            />
+            {product.banner ? (
+              <Image
+                src={product.banner}
+                alt={product.name}
+                width={1200}
+                height={500}
+                priority
+                className="object-cover w-full h-[400px] md:h-[400px] rounded-xl"
+              />
+            ) : (
+              <div className="bg-gray-200 w-full h-[400px] md:h-[400px] rounded-xl" aria-hidden />
+            )}
           </Link>
 
           {/* Overlay product name (optional) */}

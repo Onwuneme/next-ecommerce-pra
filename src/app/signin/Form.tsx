@@ -1,6 +1,7 @@
 'use client';
 
 import { signIn, useSession } from 'next-auth/react';
+import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -101,7 +102,7 @@ export default function Form() {
               })}
               className="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
             />
-            {errors.email && (
+            {errors?.email && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.email.message}
               </p>
@@ -123,7 +124,7 @@ export default function Form() {
               })}
               className="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
             />
-            {errors.password && (
+            {errors?.password?.message && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.password.message}
               </p>
@@ -145,6 +146,10 @@ export default function Form() {
             Sign In
           </button>
         </form>
+        <div className="text-center text-sm text-gray-600">
+          Need an account?{' '}
+          <Link href={`/register?callbackUrl=${callbackUrl}`} className="text-blue-600 hover:text-blue-700 font-medium underline">Register</Link>
+        </div>
       </div>
     </div>
   );

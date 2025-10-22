@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { DBconnect } from './db';
@@ -39,7 +40,7 @@ export const authOptions = {
   },
 
   callbacks: {
-    async jwt({ token, user, trigger, session }: any) {
+    async jwt({ token, user, trigger, session }:any) {
       if (user) {
         token.user = {
           _id: user._id,
