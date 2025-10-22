@@ -20,7 +20,7 @@ export default async function Home() {
       {/* Latest Products Section */}
       <h2 className="text-2xl font-semibold mt-10 mb-4">Latest Products</h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
-        {data.products.map((product) => (
+        {latestProducts.map((product) => (
           <Productitem key={product.slug} product={product} />
         ))}
       </div>

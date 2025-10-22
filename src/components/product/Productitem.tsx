@@ -13,6 +13,7 @@ export default function Productitem({ product }: { product: Product }) {
             alt={product.name}
             width={300}
             height={300}
+            priority
             className="object-cover w-full h-64 hover:scale-105 transition-transform duration-500"
           />
         </Link>

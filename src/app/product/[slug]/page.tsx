@@ -1,7 +1,21 @@
 import AddToCart from '@/components/product/AddToCart';
-import data from '@/lib/data';
+
+import productService from '@/lib/services/productService';
+import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+export async function generataMetadata({params}:{params:{slug:string}}) {
+  const {slug}= await params
+  const product = await productService.getSlug(slug)
+  if(!product){
+    return{ title: 'Product not found'}
+  }
+  return{
+    title: product.name,
+    description: product.description
+  }
+  
+}
 
 export default async function ProductDetails({
   params,
@@ -9,7 +23,8 @@ export default async function ProductDetails({
   params: { slug: string };
 }) {
   const { slug } = await params;
-  const product = data.products?.find((item) => item.slug === slug);
+
+  const product =  await productService.getSlug(slug)
   if (!product) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
@@ -35,6 +50,7 @@ export default async function ProductDetails({
             alt={product.name}
             width={640}
             height={640}
+            priority
             sizes="100vw"
             className="rounded-xl object-cover w-full h-auto hover:scale-105 transition-transform duration-500"
           />
