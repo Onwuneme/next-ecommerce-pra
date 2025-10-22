@@ -8,8 +8,8 @@ import { SubmitHandler, useForm, ValidationRule } from 'react-hook-form';
 
 export default function Form() {
   const router = useRouter();
-  const { saveShipping, shippingAdress, saveShippingAddress } =
-    useCartService();
+  const { shippingAddress, saveShippingAddress } = useCartService();
+
   const {
     register,
     handleSubmit,
@@ -26,12 +26,10 @@ export default function Form() {
   });
 
   useEffect(() => {
-    setValue('fullName', shippingAdress.fullName);
-    setValue('address', shippingAdress.address);
-    setValue('city', shippingAdress.city);
-    setValue('postalCode', shippingAdress.postalCode);
-    setValue('country', shippingAdress.country);
-  }, [setValue, shippingAdress]);
+    Object.entries(shippingAddress || {}).forEach(([key, value]) => {
+      setValue(key as keyof ShippingAddress, value);
+    });
+  }, [setValue, shippingAddress]);
 
   const FormInput = ({
     id,
@@ -44,8 +42,11 @@ export default function Form() {
     required?: boolean;
     pattern?: ValidationRule<RegExp>;
   }) => (
-    <div className="mb-4">
-      <label htmlFor={id} className="block font-medium mb-1">
+    <div className="mb-5">
+      <label
+        htmlFor={id}
+        className="block text-gray-700 font-semibold mb-1 text-sm"
+      >
         {name}
       </label>
       <input
@@ -55,12 +56,19 @@ export default function Form() {
           required: required && `${name} is required`,
           pattern,
         })}
-        className="w-full border rounded px-3 py-2"
+        placeholder={`Enter your ${name.toLowerCase()}`}
+        className={`w-full border ${
+          errors[id] ? 'border-red-500' : 'border-gray-300'
+        } rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 ${
+          errors[id]
+            ? 'focus:ring-red-400'
+            : 'focus:ring-blue-500 focus:border-blue-500'
+        } transition duration-200`}
       />
       {errors[id]?.message && (
-        <div className="text-red-500 text-sm mt-1">
+        <p className="text-red-500 text-xs mt-1">
           {String(errors[id]?.message)}
-        </div>
+        </p>
       )}
     </div>
   );
@@ -71,29 +79,35 @@ export default function Form() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50 py-10 px-4">
       <CheckoutSteps current={1} />
-      <div className="max-w-sm mx-auto">
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Shipping Address</h2>
-          <form onSubmit={handleSubmit(formSubmit)}>
-            <FormInput id="fullName" name="Full name" required />
-            <FormInput id="address" name="Address" required />
-            <FormInput id="city" name="City" required />
-            <FormInput id="postalCode" name="Postal code" required />
-            <FormInput id="country" name="Country" required />
+      <div className="max-w-md mx-auto bg-white shadow-md rounded-2xl p-6 border border-gray-100">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+          Shipping Address
+        </h2>
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className={`w-full py-2 mt-2 rounded text-white ${
-                isSubmitting ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-700'
-              }`}
-            >
-              {isSubmitting ? 'Saving...' : 'Continue'}
-            </button>
-          </form>
-        </div>
+        <form onSubmit={handleSubmit(formSubmit)} className="space-y-3">
+          <FormInput id="fullName" name="Full Name" required />
+          <FormInput id="address" name="Address" required />
+          <FormInput id="city" name="City" required />
+          <FormInput id="postalCode" name="Postal Code" required />
+          <FormInput id="country" name="Country" required />
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className={`w-full py-3 rounded-lg text-white font-semibold text-sm transition-all duration-300 flex justify-center items-center gap-2 ${
+              isSubmitting
+                ? 'bg-blue-400 cursor-not-allowed'
+                : 'bg-blue-600 hover:bg-blue-700 shadow-md hover:shadow-lg'
+            }`}
+          >
+            {isSubmitting && (
+              <span className="animate-spin inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full"></span>
+            )}
+            {isSubmitting ? 'Saving...' : 'Continue'}
+          </button>
+        </form>
       </div>
     </div>
   );

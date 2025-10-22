@@ -36,7 +36,7 @@ export const cartStore = create<Cart>()(
   })
 );
 export default function useCartService() {
-  const { items, itemsPrice, taxPrice, shippingPrice, totalPrice } =
+  const { items, itemsPrice, taxPrice, shippingPrice, totalPrice,paymentMethod,shippingAddress } =
     cartStore();
 
   return {
@@ -45,6 +45,8 @@ export default function useCartService() {
     taxPrice,
     totalPrice,
     shippingPrice,
+    paymentMethod,
+    shippingAddress,
     increase: (item: OrderItem) => {
       const exist = items.find((i) => i.slug === item.slug);
       const updatedCartitems = exist

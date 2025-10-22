@@ -1,7 +1,10 @@
+import { Metadata } from 'next';
+import Form from './Form';
 
+export const metadata: Metadata = {
+  title: 'Shipping Address',
+};
 
-export default function Shipping() {
-  return (
-    <div>page</div>
-  )
+export default async function Shipping() {
+  return <Form />;
 }
